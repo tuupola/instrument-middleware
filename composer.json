@@ -1,0 +1,39 @@
+{
+    "name": "tuupola/instrument-middleware",
+    "description": "PSR-7 Middleware for instrumenting PHP applications",
+    "keywords": [
+        "psr-7",
+        "middleware",
+        "instrument",
+        "metrics"
+    ],
+    "homepage": "https://github.com/tuupola/instrument-middleware",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mika Tuupola",
+            "email": "tuupola@appelsiini.net",
+            "homepage": "http://www.appelsiini.net/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : "^5.5 || ^7.0",
+        "tuupola/instrument": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tuupola\\Middleware\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tuupola\\Middleware\\": "tests"
+        }
+    },
+    "require-dev": {
+        "zendframework/zend-diactoros": "^1.3",
+        "squizlabs/php_codesniffer": "^2.5",
+        "phpunit/phpunit": "^4.8"
+    }
+}
