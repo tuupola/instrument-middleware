@@ -46,6 +46,8 @@ $container["instrumentMiddleware"] = function ($container) {
 $app->add("instrumentMiddleware");
 ```
 
+## What data is logged?
+
 Let's assume you have the following routes.
 
 ```php
@@ -76,6 +78,8 @@ time                 bootstrap  memory   method  process  route          status 
 1475316763025260932  140        1048576  GET     69       /hello/{name}  200     211
 
 ```
+
+## Adding more data
 
 You can also manually add additional data to the measurement.
 
