@@ -8,6 +8,8 @@
 
 Companion middleware for [Instrument](https://github.com/tuupola/instrument). Automates basic instrumenting of PSR-7 based application code.
 
+![Instrument Middleware](http://www.appelsiini.net/img/instrument-middleware-1400.png)
+
 ## Install
 
 Install using [composer](https://getcomposer.org/).
