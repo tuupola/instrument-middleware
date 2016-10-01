@@ -1,4 +1,4 @@
-# Instrument Middleware
+# [WIP] Instrument middleware
 
 [![Latest Version](https://img.shields.io/packagist/v/tuupola/instrument-middleware.svg?style=flat-square)](https://packagist.org/packages/tuupola/instrument-middleware)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
@@ -12,10 +12,10 @@ Companion middleware for [Instrument](https://github.com/tuupola/instrument). Au
 
 ## Install
 
-Install using [composer](https://getcomposer.org/).
+Install using [composer](https://getcomposer.org/). This is still work in progress so should use `dev-master`.
 
 ``` bash
-$ composer require tuupola/instrument-middleware
+$ composer require tuupola/instrument-middleware:dev-master
 ```
 
 ## Usage
