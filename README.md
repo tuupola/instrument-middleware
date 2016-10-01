@@ -46,6 +46,35 @@ $container["instrumentMiddleware"] = function ($container) {
 
 $app->add("instrumentMiddleware");
 
+$app->get("/", function ($request, $response, $arguments) {
+    return $response->write("Here be dragons...\n");
+});
+
+$app->get("/hello/{name}", function ($request, $response, $arguments) {
+    return $response->write("Hello {$arguments['name']}!\n");
+});
+
+$app->run();
+
+```
+
+When any of the routes are requested the middleware saves basic instrumentation data to database.
+
+``` bash
+$ curl http://192.168.50.53/
+Here be dragons...
+$ curl http://192.168.50.53/hello/foo
+Hello foo!
+```
+
+``` sql
+> select * from instrument
+name: instrument
+----------------
+time                bootstrap memory  method process route         status  total
+1475316633441185508 158       1048576 GET    53      /             200     213
+1475316763025260932 140       1048576 GET    69      /hello/{name} 200     211
+
 ```
 
 ## Testing
