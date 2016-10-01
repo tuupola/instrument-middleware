@@ -32,6 +32,7 @@ class Instrument
         "memory" => "memory",
         "status" => "status",
         "route" => "route",
+        "method" => "method",
         "tags" => []
     ];
 
@@ -72,6 +73,17 @@ class Instrument
 
         /* Store PHP memory usage. */
         $timing->set($this->memory, (integer)$timing->memory());
+
+        /* Store request method. */
+        $timing->addTag($this->method, $request->getMethod());
+
+        /* Store route pattern when possible. */
+        if ($route = $request->getAttribute("route")->getPattern()) {
+            $timing->addTag($this->route, $route);
+        };
+
+        /* Store response status code. */
+        $timing->addTag($this->status, $response->getStatusCode());
 
         /* Time spent from starting the request to exiting last middleware. */
         $total = (microtime(true) - $start) * 1000;
@@ -175,6 +187,17 @@ class Instrument
     public function getRoute()
     {
         return $this->options["route"];
+    }
+
+    public function setMethod($method)
+    {
+        $this->options["method"] = $method;
+        return $this;
+    }
+
+    public function getMethod()
+    {
+        return $this->options["method"];
     }
 
     public function setTags(array $tags)
