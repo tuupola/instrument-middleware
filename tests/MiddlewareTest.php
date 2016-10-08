@@ -126,6 +126,15 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("setup", $middleware->getBootstrap());
     }
 
+    public function testShouldSetAndGetProcess()
+    {
+        $middleware = new Middleware([]);
+        $this->assertEquals("process", $middleware->getProcess());
+
+        $middleware->setProcess("execute");
+        $this->assertEquals("execute", $middleware->getProcess());
+    }
+
     public function testShouldSetAndGetTotal()
     {
         $middleware = new Middleware([]);

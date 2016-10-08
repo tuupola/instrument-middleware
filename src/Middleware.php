@@ -26,6 +26,7 @@ class Middleware
     private $instrument = null;
     private $measurement = "instrument";
     private $bootstrap = "bootstrap";
+    private $process = "process";
     private $total = "total";
     private $memory = "memory";
     private $status = "status";
@@ -120,6 +121,17 @@ class Middleware
     public function getBootstrap()
     {
         return $this->bootstrap;
+    }
+
+    public function setProcess($process)
+    {
+        $this->process = $process;
+        return $this;
+    }
+
+    public function getProcess()
+    {
+        return $this->process;
     }
 
     public function setTotal($total)
