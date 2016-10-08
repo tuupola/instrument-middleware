@@ -45,10 +45,6 @@ class Instrument
     {
         /* Store passed in options overwriting any defaults. */
         $this->hydrate($options);
-
-        if ($this->instrument) {
-            //$this->instrument->tags($this->tags());
-        }
     }
 
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
@@ -61,6 +57,7 @@ class Instrument
         }
 
         $timing = $this->instrument->timing($this->measurement);
+        $timing->tags($this->tags);
 
         /* Time spent from starting the request to entering first middleware. */
         $bootstrap = (microtime(true) - $start) * 1000;
