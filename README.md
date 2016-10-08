@@ -26,6 +26,23 @@ You must have access to [InfluxDB](https://influxdata.com/) database to store th
 require __DIR__ . "/vendor/autoload.php";
 
 $app = new \Slim\App;
+
+$influxdb = InfluxDB\Client::fromDSN("http+influxdb://foo:bar@localhost:8086/instrument");
+
+$app->add(new Instrument\Middleware([
+    "instrument" => new Instrument\Instrument([
+        "adapter" => new Instrument\Adapter\InfluxDB($influxdb),
+        "transformer" => new Instrument\Transformer\InfluxDB
+    ])
+]));
+```
+
+Or if you are using Slim 3 containers which is a bit cleaner.
+
+``` php
+require __DIR__ . "/vendor/autoload.php";
+
+$app = new \Slim\App;
 $container = $app->getContainer();
 
 $container["influxdb"] = function ($container) {
