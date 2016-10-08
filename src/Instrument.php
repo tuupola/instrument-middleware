@@ -91,10 +91,7 @@ class Instrument
 
         /* Time spent from starting the request to exiting last middleware. */
         $total = (microtime(true) - $start) * 1000;
-        $this
-            ->instrument
-            ->timing($this->measurement)
-            ->set($this->total, (integer)$total);
+        $timing->set($this->total, (integer)$total);
 
         $this->instrument->send();
 

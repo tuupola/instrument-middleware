@@ -62,6 +62,44 @@ class InstrumentTest extends \PHPUnit_Framework_TestCase
         $this->assertRegExp($regexp, (string)$sent["instrument"]);
     }
 
+    public function testShouldInvokeAlternative()
+    {
+        $request = (new Request())
+            ->withUri(new Uri("https://example.com/api"))
+            ->withMethod("GET");
+
+        $response = new Response;
+
+        $toolkit = new InstrumentToolkit([
+            "transformer" => new \Instrument\Transformer\InfluxDB,
+            "adapter" => new \Instrument\Adapter\Memory
+        ]);
+
+        unset($_SERVER["REQUEST_TIME_FLOAT"]);
+
+        $middleware = new InstrumentMiddleware([
+            "instrument" => $toolkit,
+            "tags" => function ($request, $response) {
+                return ["host" => "localhost"];
+            }
+        ]);
+
+        $next = function (Request $request, Response $response) {
+            $response->getBody()->write("Foo");
+            return $response;
+        };
+
+        $response = $middleware($request, $response, $next);
+
+        $adapter = $toolkit->adapter();
+        $sent = $adapter->measurements();
+
+        /* instrument,method=GET,route=/api,status=200,host=localhost
+        bootstrap=105i,process=10i,memory=7864320i,total=107i */
+        $regexp = "/instrument,method=GET,route=\/api,status=200,host=localhost "
+                . "bootstrap=\d*i,process=\d*i,memory=\d*i,total=\d*i/";
+        $this->assertRegExp($regexp, (string)$sent["instrument"]);
+    }
 
     public function testShouldSetAndGetInstrument()
     {
