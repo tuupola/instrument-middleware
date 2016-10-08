@@ -76,6 +76,12 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
 
         $middleware = new Middleware([
             "instrument" => $toolkit,
+            "method" => false,
+            "status" => false,
+            "process" => false,
+            "route" => false,
+            "bootstrap" => false,
+            "memory" => false,
             "tags" => function ($request, $response) {
                 return ["host" => "localhost"];
             }
@@ -91,10 +97,8 @@ class MiddlewareTest extends \PHPUnit_Framework_TestCase
         $adapter = $toolkit->adapter();
         $sent = $adapter->measurements();
 
-        /* instrument,method=GET,route=/api,status=200,host=localhost
-        bootstrap=105i,process=10i,memory=7864320i,total=107i */
-        $regexp = "/instrument,method=GET,route=\/api,status=200,host=localhost "
-                . "bootstrap=\d*i,process=\d*i,memory=\d*i,total=\d*i/";
+        /* instrument,host=localhost total=107i */
+        $regexp = "/instrument,host=localhost total=\d*i/";
         $this->assertRegExp($regexp, (string)$sent["instrument"]);
     }
 

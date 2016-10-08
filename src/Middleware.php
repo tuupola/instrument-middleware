@@ -52,26 +52,38 @@ class Middleware
         $timing = $this->instrument->timing($this->measurement);
 
         /* Time spent from starting the request to entering first middleware. */
-        $bootstrap = (microtime(true) - $start) * 1000;
-        $timing->set($this->bootstrap, (integer)$bootstrap);
+        if ($this->bootstrap) {
+            $bootstrap = (microtime(true) - $start) * 1000;
+            $timing->set($this->bootstrap, (integer)$bootstrap);
+        }
 
         /* Call all the other middlewares. */
-        $timing->start("process");
-        $response = $next($request, $response);
-        $timing->stop("process");
+        if ($this->process) {
+            $timing->start($this->process);
+            $response = $next($request, $response);
+            $timing->stop($this->process);
+        }
 
         /* Store PHP memory usage. */
-        $timing->set($this->memory, (integer)$timing->memory());
+        if ($this->memory) {
+            $timing->set($this->memory, (integer)$timing->memory());
+        }
 
         /* Store request method. */
-        $timing->addTag($this->method, $request->getMethod());
+        if ($this->method) {
+            $timing->addTag($this->method, $request->getMethod());
+        }
 
         /* Store current route without query string. */
-        $uri = $request->getUri();
-        $timing->addTag($this->route, $uri->getPath());
+        if ($this->route) {
+            $uri = $request->getUri();
+            $timing->addTag($this->route, $uri->getPath());
+        }
 
         /* Store response status code. */
-        $timing->addTag($this->status, $response->getStatusCode());
+        if ($this->status) {
+            $timing->addTag($this->status, $response->getStatusCode());
+        }
 
         /* Add the tags which are passed in options. This will overwrite */
         /* any of the default tags. */
@@ -82,8 +94,10 @@ class Middleware
         }
 
         /* Time spent from starting the request to exiting last middleware. */
-        $total = (microtime(true) - $start) * 1000;
-        $timing->set($this->total, (integer)$total);
+        if ($this->total) {
+            $total = (microtime(true) - $start) * 1000;
+            $timing->set($this->total, (integer)$total);
+        }
 
         $this->instrument->send();
 
