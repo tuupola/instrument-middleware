@@ -19,7 +19,7 @@
     ],
     "require": {
         "php" : "^5.5 || ^7.0",
-        "tuupola/instrument": "^1.1",
+        "tuupola/instrument": "^1.2",
         "tuupola/witchcraft": "^1.1"
     },
     "autoload": {
