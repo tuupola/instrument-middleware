@@ -77,10 +77,9 @@ class Instrument
         /* Store request method. */
         $timing->addTag($this->method, $request->getMethod());
 
-        /* Store route pattern when possible. */
-        if ($route = $request->getAttribute("route")->getPattern()) {
-            $timing->addTag($this->route, $route);
-        };
+        /* Store current route without query string. */
+        $uri = $request->getUri();
+        $timing->addTag($this->route, $uri->getPath());
 
         /* Store response status code. */
         $timing->addTag($this->status, $response->getStatusCode());
@@ -93,7 +92,7 @@ class Instrument
             ->set($this->total, (integer)$total);
 
         $this->instrument->send();
-        //return $response->write(print_r($this->instrument, true));
+
         return $response;
     }
 
