@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
 
 class Instrument
 {
-    //use \Witchcraft\Hydrate;
+    use \Witchcraft\Hydrate;
     use \Witchcraft\MagicMethods;
     use \Witchcraft\MagicProperties;
 
@@ -97,26 +97,6 @@ class Instrument
         $this->instrument->send();
 
         return $response;
-    }
-
-    /**
-     * Hydate options from given array
-     *
-     * @param array $data Array of options.
-     * @return self
-     */
-    private function hydrate(array $data = [])
-    {
-        foreach ($data as $key => $value) {
-            /* https://github.com/facebook/hhvm/issues/6368 */
-            $key = str_replace(".", " ", $key);
-            $method = "set" . ucwords($key);
-            $method = str_replace(" ", "", $method);
-            if (method_exists($this, $method)) {
-                call_user_func([$this, $method], $value);
-            }
-        }
-        return $this;
     }
 
     public function setInstrument($instrument)
@@ -211,63 +191,5 @@ class Instrument
     public function getTags()
     {
         return $this->options["tags"];
-    }
-
-    /**
-     * Set the logger
-     *
-     * @return self
-     */
-    public function setLogger(LoggerInterface $logger = null)
-    {
-        $this->logger = $logger;
-        return $this;
-    }
-
-    /**
-     * Get the logger
-     *
-     * @return Psr\Log\LoggerInterface
-     */
-    public function getLogger()
-    {
-        return $this->logger;
-    }
-
-    /**
-     * Get the error handler
-     *
-     * @return string
-     */
-    public function getError()
-    {
-        return $this->options["error"];
-    }
-
-    /**
-     * Set the error handler
-     *
-     * @return self
-     */
-    public function setError($error)
-    {
-        $this->options["error"] = $error;
-        return $this;
-    }
-
-    /**
-     * Call the error handler if it exists
-     *
-     * @return Psr\Http\Message\ResponseInterface
-     */
-    public function error(RequestInterface $request, ResponseInterface $response, $arguments)
-    {
-        if (is_callable($this->options["error"])) {
-            $handler_response = $this->options["error"]($request, $response, $arguments);
-            if (is_a($handler_response, "\Psr\Http\Message\ResponseInterface")) {
-                return $handler_response;
-            }
-        }
-        return $response;
     }
 }
