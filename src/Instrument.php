@@ -36,7 +36,6 @@ class Instrument
         "tags" => []
     ];
 
-    private $settings;
     private $instrument = null;
 
     protected $logger;
@@ -57,7 +56,6 @@ class Instrument
         }
 
         $timing = $this->instrument->timing($this->measurement);
-        $timing->tags($this->tags);
 
         /* Time spent from starting the request to entering first middleware. */
         $bootstrap = (microtime(true) - $start) * 1000;
@@ -80,6 +78,14 @@ class Instrument
 
         /* Store response status code. */
         $timing->addTag($this->status, $response->getStatusCode());
+
+        /* Add the tags which are passed in options. This will overwrite */
+        /* any of the default tags. */
+        if (is_array($this->tags)) {
+            $timing->addTags($this->tags);
+        } else {
+            $timing->addTags($this->tags($request, $response));
+        }
 
         /* Time spent from starting the request to exiting last middleware. */
         $total = (microtime(true) - $start) * 1000;
@@ -196,7 +202,7 @@ class Instrument
         return $this->options["method"];
     }
 
-    public function setTags(array $tags)
+    public function setTags($tags)
     {
         $this->options["tags"] = $tags;
         return $this;
