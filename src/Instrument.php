@@ -19,6 +19,8 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
+use Instrument\Instrument as InstrumentToolkit;
+
 class Instrument
 {
     use \Witchcraft\Hydrate;
@@ -99,10 +101,15 @@ class Instrument
         return $response;
     }
 
-    public function setInstrument($instrument)
+    public function setInstrument(InstrumentToolkit $instrument)
     {
         $this->instrument = $instrument;
         return $this;
+    }
+
+    public function getInstrument()
+    {
+        return $this->instrument;
     }
 
     public function setMeasurement($measurement)
