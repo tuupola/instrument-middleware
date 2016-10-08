@@ -26,7 +26,6 @@ class Instrument
     use \Witchcraft\MagicProperties;
 
     private $options = [
-        "measurement" => "instrument",
         "bootstrap" => "bootstrap",
         "total" => "total",
         "memory" => "memory",
@@ -36,6 +35,7 @@ class Instrument
         "tags" => []
     ];
 
+    private $measurement = "instrument";
     private $instrument = null;
 
     protected $logger;
@@ -133,7 +133,7 @@ class Instrument
 
     public function getMeasurement()
     {
-        return $this->options["measurement"];
+        return $this->measurement;
     }
 
     public function setBootstrap($bootstrap)
@@ -142,7 +142,7 @@ class Instrument
         return $this;
     }
 
-        public function getBootstrap()
+    public function getBootstrap()
     {
         return $this->options["bootstrap"];
     }
@@ -171,7 +171,7 @@ class Instrument
 
     public function setStatus($status)
     {
-        $this->options["status"] = $statud;
+        $this->options["status"] = $status;
         return $this;
     }
 
