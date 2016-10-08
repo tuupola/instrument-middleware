@@ -13,16 +13,13 @@
  *
  */
 
-namespace Tuupola\Middleware;
+namespace Instrument;
 
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
 
-use Instrument\Instrument as InstrumentToolkit;
-use Tuupola\Middleware\Instrument as InstrumentMiddleware;
-
-class InstrumentTest extends \PHPUnit_Framework_TestCase
+class MiddlewareTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testShouldBeTrue()
@@ -38,12 +35,12 @@ class InstrumentTest extends \PHPUnit_Framework_TestCase
 
         $response = new Response;
 
-        $toolkit = new InstrumentToolkit([
+        $toolkit = new Instrument([
             "transformer" => new \Instrument\Transformer\InfluxDB,
             "adapter" => new \Instrument\Adapter\Memory
         ]);
 
-        $middleware = new InstrumentMiddleware([
+        $middleware = new Middleware([
             "instrument" => $toolkit
         ]);
 
@@ -70,14 +67,14 @@ class InstrumentTest extends \PHPUnit_Framework_TestCase
 
         $response = new Response;
 
-        $toolkit = new InstrumentToolkit([
+        $toolkit = new Instrument([
             "transformer" => new \Instrument\Transformer\InfluxDB,
             "adapter" => new \Instrument\Adapter\Memory
         ]);
 
         unset($_SERVER["REQUEST_TIME_FLOAT"]);
 
-        $middleware = new InstrumentMiddleware([
+        $middleware = new Middleware([
             "instrument" => $toolkit,
             "tags" => function ($request, $response) {
                 return ["host" => "localhost"];
@@ -103,17 +100,17 @@ class InstrumentTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldSetAndGetInstrument()
     {
-        $middleware = new InstrumentMiddleware([]);
+        $middleware = new Middleware([]);
         $this->assertEquals(null, $middleware->getInstrument());
 
-        $middleware->setInstrument(new InstrumentToolkit([]));
+        $middleware->setInstrument(new Instrument([]));
         $this->assertInstanceOf("Instrument\Instrument", $middleware->getInstrument());
     }
 
 
     public function testShouldSetAndGetMeasurement()
     {
-        $middleware = new InstrumentMiddleware([]);
+        $middleware = new Middleware([]);
         $this->assertEquals("instrument", $middleware->getMeasurement());
 
         $middleware->setMeasurement("api");
@@ -122,7 +119,7 @@ class InstrumentTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldSetAndGetBootstrap()
     {
-        $middleware = new InstrumentMiddleware([]);
+        $middleware = new Middleware([]);
         $this->assertEquals("bootstrap", $middleware->getBootstrap());
 
         $middleware->setBootstrap("setup");
@@ -131,7 +128,7 @@ class InstrumentTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldSetAndGetTotal()
     {
-        $middleware = new InstrumentMiddleware([]);
+        $middleware = new Middleware([]);
         $this->assertEquals("total", $middleware->getTotal());
 
         $middleware->setTotal("combined");
@@ -140,7 +137,7 @@ class InstrumentTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldSetAndGetMemory()
     {
-        $middleware = new InstrumentMiddleware([]);
+        $middleware = new Middleware([]);
         $this->assertEquals("memory", $middleware->getMemory());
 
         $middleware->setMemory("mem");
@@ -149,7 +146,7 @@ class InstrumentTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldSetAndGetStatus()
     {
-        $middleware = new InstrumentMiddleware([]);
+        $middleware = new Middleware([]);
         $this->assertEquals("status", $middleware->getStatus());
 
         $middleware->setStatus("code");
@@ -158,7 +155,7 @@ class InstrumentTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldSetAndGetRoute()
     {
-        $middleware = new InstrumentMiddleware([]);
+        $middleware = new Middleware([]);
         $this->assertEquals("route", $middleware->getRoute());
 
         $middleware->setRoute("uri");
@@ -167,7 +164,7 @@ class InstrumentTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldSetAndGetMethod()
     {
-        $middleware = new InstrumentMiddleware([]);
+        $middleware = new Middleware([]);
         $this->assertEquals("method", $middleware->getMethod());
 
         $middleware->setMethod("verb");
@@ -176,7 +173,7 @@ class InstrumentTest extends \PHPUnit_Framework_TestCase
 
     public function testShouldSetAndGetTags()
     {
-        $middleware = new InstrumentMiddleware([]);
+        $middleware = new Middleware([]);
 
         $middleware->setTags(["mono" => "junk"]);
         $this->assertEquals(["mono" => "junk"], $middleware->getTags());

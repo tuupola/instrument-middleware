@@ -13,14 +13,12 @@
  *
  */
 
-namespace Tuupola\Middleware;
+namespace Instrument;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-use Instrument\Instrument as InstrumentToolkit;
-
-class Instrument
+class Middleware
 {
     use \Witchcraft\Hydrate;
     use \Witchcraft\MagicMethods;
@@ -97,7 +95,7 @@ class Instrument
         return $response;
     }
 
-    public function setInstrument(InstrumentToolkit $instrument)
+    public function setInstrument(Instrument $instrument)
     {
         $this->instrument = $instrument;
         return $this;

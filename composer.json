@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Tuupola\\Middleware\\": "src"
+            "Instrument\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tuupola\\Middleware\\": "tests"
+            "Instrument\\": "tests"
         }
     },
     "require-dev": {

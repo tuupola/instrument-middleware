@@ -40,7 +40,7 @@ $container["instrument"] = function ($container) {
 };
 
 $container["instrumentMiddleware"] = function ($container) {
-    return new Tuupola\Middleware\Instrument([
+    return new Instrument\Middleware([
         "instrument" => $container["instrument"]
     ]);
 };
