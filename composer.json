@@ -20,7 +20,8 @@
     "require": {
         "php" : "^5.5 || ^7.0",
         "tuupola/instrument": "^1.2",
-        "tuupola/witchcraft": "^1.1"
+        "tuupola/witchcraft": "^1.1",
+        "psr/http-message": "^1.0"
     },
     "autoload": {
         "psr-4": {

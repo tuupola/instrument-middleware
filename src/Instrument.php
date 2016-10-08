@@ -17,7 +17,6 @@ namespace Tuupola\Middleware;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Log\LoggerInterface;
 
 use Instrument\Instrument as InstrumentToolkit;
 
