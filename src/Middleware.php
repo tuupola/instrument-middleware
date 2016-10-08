@@ -22,22 +22,16 @@ class Middleware
 {
     use \Witchcraft\Hydrate;
     use \Witchcraft\MagicMethods;
-    use \Witchcraft\MagicProperties;
 
-    private $options = [
-        "bootstrap" => "bootstrap",
-        "total" => "total",
-        "memory" => "memory",
-        "status" => "status",
-        "route" => "route",
-        "method" => "method",
-        "tags" => []
-    ];
-
-    private $measurement = "instrument";
     private $instrument = null;
-
-    protected $logger;
+    private $measurement = "instrument";
+    private $bootstrap = "bootstrap";
+    private $total = "total";
+    private $memory = "memory";
+    private $status = "status";
+    private $route = "route";
+    private $method = "method";
+    private $tags = [];
 
     public function __construct($options)
     {
@@ -119,78 +113,78 @@ class Middleware
 
     public function setBootstrap($bootstrap)
     {
-        $this->options["bootstrap"] = $bootstrap;
+        $this->bootstrap = $bootstrap;
         return $this;
     }
 
     public function getBootstrap()
     {
-        return $this->options["bootstrap"];
+        return $this->bootstrap;
     }
 
     public function setTotal($total)
     {
-        $this->options["total"] = $total;
+        $this->total = $total;
         return $this;
     }
 
     public function getTotal()
     {
-        return $this->options["total"];
+        return $this->total;
     }
 
     public function setMemory($memory)
     {
-        $this->options["memory"] = $memory;
+        $this->memory = $memory;
         return $this;
     }
 
     public function getMemory()
     {
-        return $this->options["memory"];
+        return $this->memory;
     }
 
     public function setStatus($status)
     {
-        $this->options["status"] = $status;
+        $this->status = $status;
         return $this;
     }
 
     public function getStatus()
     {
-        return $this->options["status"];
+        return $this->status;
     }
 
     public function setRoute($route)
     {
-        $this->options["route"] = $route;
+        $this->route = $route;
         return $this;
     }
 
     public function getRoute()
     {
-        return $this->options["route"];
+        return $this->route;
     }
 
     public function setMethod($method)
     {
-        $this->options["method"] = $method;
+        $this->method = $method;
         return $this;
     }
 
     public function getMethod()
     {
-        return $this->options["method"];
+        return $this->method;
     }
 
     public function setTags($tags)
     {
-        $this->options["tags"] = $tags;
+        $this->tags = $tags;
         return $this;
     }
 
     public function getTags()
     {
-        return $this->options["tags"];
+        return $this->tags;
     }
 }
