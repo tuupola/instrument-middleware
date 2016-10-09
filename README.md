@@ -111,6 +111,40 @@ all other middlewares.
 Tags `method` and `status` are the request method and the HTTP status code of
 the response. Tag `route` is the requested URI without query string.
 
+## Adding or overriding tags
+
+You can add tags by using `tags` parameter. It can be either an array or anonymous
+function returning an array. Function receives both `$request` and `$response` objects
+as parameters. If you return any of the default tags it will override the value
+otherwise set by the middleware.
+
+```php
+$app->add(new Instrument\Middleware([
+    "instrument" => $instrument,
+    "tags" => ["host" => "localhost", "method" => "XXX"]
+]));
+```
+
+Is essentially the same as code below.
+
+```php
+$app->add(new Instrument\Middleware([
+    "instrument" => $instrument,
+    "tags" => function ($request, $response) {
+        return ["host" => "localhost", "method" => "XXX"];
+    }
+]));
+```
+
+```sql
+> select * from instrument
+name: instrument
+----------------
+time                 bootstrap  memory   host       method  process  route       status  total
+1475316633441185508  158        1048576  localhost  XXX     53       /           200     213
+1475316763025260932  140        1048576  localhost  XXX     69       /hello/foo  200     211
+```
+
 ## Customising field and tag names
 
 All field and tag names can be customized. Following example changes all tag
@@ -118,7 +152,7 @@ and field names. It also changes the measurement name. In InfluxDB lingo `MEASUR
 is the same as `TABLE` in SQL world.
 
 
-```
+```php
 $app->add(new Instrument\Middleware([
     "instrument" => $instrument,
     "measurement" = "api",
@@ -143,7 +177,7 @@ time                 startup  mem      verb  execution  uri         code  all
 
 To disable a tag or field set it to `false`.
 
-```
+```php
 $app->add(new Instrument\Middleware([
     "instrument" => $instrument,
     "measurement" = "api",
