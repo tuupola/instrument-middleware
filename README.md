@@ -65,7 +65,7 @@ $container["instrumentMiddleware"] = function ($container) {
 $app->add("instrumentMiddleware");
 ```
 
-## What data is logged?
+## What is logged?
 
 Let's assume you have the following routes.
 
@@ -92,13 +92,28 @@ Hello foo!
 > select * from instrument
 name: instrument
 ----------------
-time                 bootstrap  memory   method  process  route          status  total
-1475316633441185508  158        1048576  GET     53       /              200     213
-1475316763025260932  140        1048576  GET     69       /hello/{name}  200     211
+time                 bootstrap  memory   method  process  route       status  total
+1475316633441185508  158        1048576  GET     53       /           200     213
+1475316763025260932  140        1048576  GET     69       /hello/foo  200     211
 
 ```
 
-## Adding more data
+Field `bootstrap` is the time elapsed between start of the request and executing
+the first middleware. Note again that Instrument middleware *must* be the last
+one added so it will be executed first.
+
+Fields `memory` and `process` are the peak PHP memory usage and elapsed time
+during the processing of the request. This includes the route or controller and
+all other middlewares.
+
+Tags `method` and `status` are the request method and the HTTP status code of
+the response. Tag `route` is the requested URI without query string.
+
+Lastly the field `total` is the time elapsed between starting the request and
+exiting the last middleware. This again assumes Instrument middleware was added
+last.
+
+## Manually adding data
 
 You can also manually add additional data to the measurement.
 
@@ -124,6 +139,8 @@ name: instrument
 time                 bootstrap  db   memory   method  process  route    status  total
 1475318315949095876  155        411  1048576  GET     466      /manual  200     623
 ```
+
+
 
 ## Testing
 
