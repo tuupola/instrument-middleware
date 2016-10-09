@@ -99,8 +99,10 @@ time                 bootstrap  memory   method  process  route       status  to
 ```
 
 Field `bootstrap` is the time elapsed between start of the request and executing
-the first middleware. Note again that Instrument middleware *must* be the last
-one added so it will be executed first.
+the first middleware. Field `total` is the time elapsed between starting the
+request and exiting the last middleware. Note again that Instrument middleware
+*must* be the last one added so it will be executed first when entering and
+last when exiting the  middleware stack.
 
 Fields `memory` and `process` are the peak PHP memory usage and elapsed time
 during the processing of the request. This includes the route or controller and
@@ -109,9 +111,60 @@ all other middlewares.
 Tags `method` and `status` are the request method and the HTTP status code of
 the response. Tag `route` is the requested URI without query string.
 
-Lastly the field `total` is the time elapsed between starting the request and
-exiting the last middleware. This again assumes Instrument middleware was added
-last.
+## Customising field and tag names
+
+All field and tag names can be customized. Following example changes all tag
+and field names. It also changes the measurement name. In InfluxDB lingo `MEASUREMENT`
+is the same as `TABLE` in SQL world.
+
+
+```
+$app->add(new Instrument\Middleware([
+    "instrument" => $instrument,
+    "measurement" = "api",
+    "bootstrap" = "startup",
+    "process" = "execution",
+    "total" = "all",
+    "memory" = "mem",
+    "status" = "code",
+    "route" = "uri",
+    "method" = "verb"
+]));
+```
+
+``` sql
+> select * from api
+name: api
+----------------
+time                 startup  mem      verb  execution  uri         code  all
+1475316633441185508  158      1048576  GET   53         /           200   213
+1475316763025260932  140      1048576  GET   69         /hello/foo  200   211
+```
+
+To disable a tag or field set it to `false`.
+
+```
+$app->add(new Instrument\Middleware([
+    "instrument" => $instrument,
+    "measurement" = "api",
+    "bootstrap" = "startup",
+    "process" = false,
+    "total" = "total",
+    "memory" = false,
+    "status" = false,
+    "route" = false,
+    "method" = false
+]));
+```
+
+``` sql
+> select * from api
+name: api
+----------------
+time                 startup  total
+1475316633441185508  158      213
+1475316763025260932  140      211
+```
 
 ## Manually adding data
 
