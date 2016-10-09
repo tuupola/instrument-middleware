@@ -5,7 +5,8 @@
         "psr-7",
         "middleware",
         "instrument",
-        "metrics"
+        "metrics",
+        "influxdb"
     ],
     "homepage": "https://github.com/tuupola/instrument-middleware",
     "license": "MIT",
