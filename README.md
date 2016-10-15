@@ -234,8 +234,7 @@ time                 bootstrap  db   memory   method  process  route    status  
 You can run tests either manually...
 
 ``` bash
-$ vendor/bin/phpunit
-$ vendor/bin/phpcs --standard=PSR2 src/ -p
+$ composer test
 ```
 
 ... or automatically on every code change.
