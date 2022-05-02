@@ -233,14 +233,13 @@ time                 bootstrap  db   memory   method  process  route    status  
 You can run tests either manually...
 
 ``` bash
-$ composer test
+$ make test
 ```
 
 ... or automatically on every code change.
 
 ``` bash
-$ npm install
-$ grunt watch
+$ make watch
 ```
 
 ## Contributing

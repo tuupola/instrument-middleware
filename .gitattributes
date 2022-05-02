@@ -4,8 +4,6 @@
 /codecov.yml export-ignore
 /phpunit.xml export-ignore
 /tests export-ignore
-/Gruntfile.js export-ignore
-/package.json export-ignore
 /phpunit.xml.dist export-ignore
 /README.md export-ignore
 /CONTRIBUTING.md export-ignore
