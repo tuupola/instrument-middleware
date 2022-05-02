@@ -1,7 +1,7 @@
 # Instrument middleware
 
 [![Latest Version](https://img.shields.io/packagist/v/tuupola/instrument-middleware.svg?style=flat-square)](https://packagist.org/packages/tuupola/instrument-middleware)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Build Status](https://img.shields.io/github/workflow/status/tuupola/instrument-middleware/Tests/master?style=flat-square)](https://github.com/tuupola/instrument-middleware/actions)
 [![Coverage](https://img.shields.io/codecov/c/github/tuupola/instrument-middleware.svg?style=flat-square)](https://codecov.io/github/tuupola/instrument-middleware)
 
@@ -233,14 +233,13 @@ time                 bootstrap  db   memory   method  process  route    status  
 You can run tests either manually...
 
 ``` bash
-$ composer test
+$ make test
 ```
 
 ... or automatically on every code change.
 
 ``` bash
-$ npm install
-$ grunt watch
+$ make watch
 ```
 
 ## Contributing
@@ -253,4 +252,4 @@ If you discover any security related issues, please email tuupola@appelsiini.net
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](LICENSE) for more information.

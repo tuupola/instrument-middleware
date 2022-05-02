@@ -36,13 +36,11 @@ When contributing to open source project it is polite to follow the original aut
 You can run tests either manually...
 
 ``` bash
-$ vendor/bin/phpunit
-$ vendor/bin/phpcs --standard=PSR2 src/ -p
+$ make test
 ```
 
 ... or automatically on every code change.
 
 ``` bash
-$ npm install
-$ grunt watch
+$ make watch
 ```
